@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./normalize.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <title>COVID-19</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>COVID-19 Stats</h1>
+        <div class="chart-container">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+      <div class="stats-buttons-container">
+        <button class="confirmed-btn">Confirmed</button>
+        <button class="deaths-btn">Deaths</button>
+        <button class="recovered-btn">Recovered</button>
+        <button class="critical-btn">Critical</button>
+      </div>
+      <div class="continents-buttons-container">
+          <button class="asia-btn">Asia</button>
+          <button class="europe-btn">Europe</button>
+          <button class="africa-btn">Africa</button>
+          <button class="americas-btn">Americas</button>
+      </div>    
+
+      <div class="individual-countries-container"></div>
+
+    <script src="logic.js"></script>
+
+</body>
+</html>

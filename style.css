@@ -1,0 +1,41 @@
+body {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgba(34, 13, 51, 0.2);
+}
+
+h1 {
+    text-align: center;
+}
+
+button {
+    margin: 5px;
+    padding: 5px 15px;
+    border: 2px solid black;
+    border-radius: 25px;
+}
+
+.container {
+    width: 80%;
+    margin: 15px auto;
+  }
+
+.chart-container {
+    position: relative;
+}
+
+.continents-buttons-container, .stats-buttons-container {
+    text-align: center;
+    margin:15px;
+}
+
+.individual-countries-container {
+    margin-bottom: 15px;
+}
+
+.country-span {
+    margin: 5px;
+    text-decoration: underline;
+}
