@@ -3,11 +3,35 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-    background: rgba(34, 13, 51, 0.2);
+    position: relative;
+    height: 170vh;
+    /* background: rgba(34, 13, 51, 0.2); */
+    /* background: url(./covid-bg.jpg) no-repeat center fixed;
+    background-size: cover; */
 }
+  
+  body::after {
+    content: "";
+    background: url(./covid-bg.jpg) no-repeat center fixed;
+    background-size: cover;
+    opacity: 0.3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -2;   
+  }
 
 h1 {
     text-align: center;
+    text-decoration: underline overline;
+    padding: 15px;
+    margin: 0;
+}
+h4 {
+    text-align: center;
+    margin: 5px;
 }
 
 button {
@@ -17,13 +41,19 @@ button {
     border-radius: 25px;
 }
 
+
 .container {
     width: 80%;
-    margin: 15px auto;
+    margin: 5px auto;
   }
 
 .chart-container {
     position: relative;
+}
+
+.countries-stats-container {
+    display: flex;
+    margin: 50px 0;
 }
 
 .continents-buttons-container, .stats-buttons-container {
@@ -31,11 +61,71 @@ button {
     margin:15px;
 }
 
+.stats-buttons-container {
+    margin-top: 0;
+}
+
 .individual-countries-container {
-    margin-bottom: 15px;
+    margin: 15px;
+    text-align: center;
 }
 
 .country-span {
-    margin: 5px;
+    margin: 7px;
     text-decoration: underline;
+    cursor: pointer;
+    font-weight: bolder;
+    background: rgb(223, 219, 205);
+}
+
+.country-stats {
+    width: 260px;
+    height: 120px;
+    border: 2px solid black;
+    border-radius: 25px;
+    text-align: center;
+    margin: 0 10px;
+    background: rgb(235, 229, 208);
+}
+
+.country-stats h2 {
+    font-size: 16px;
+}
+
+@media(max-width: 500px) {
+    body {
+        height: fit-content;
+    }
+
+    button {
+        margin: 5px;
+        padding: 5px 8px;
+        font-size: smaller;
+    }
+    .country-span {
+        display: block;
+    }
+
+    .countries-stats-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top:40px;
+        margin-bottom: 5px;
+    }
+
+    .country-stats {
+        width: 150px;
+        height: 70px;
+        margin: 10px;
+    }
+
+    .country-stats h2{
+        font-size: 12px;
+    }
+
+    .country-stats h3{
+        font-size: 10px;
+    }
+
 }

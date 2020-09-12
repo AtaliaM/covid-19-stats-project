@@ -1,5 +1,6 @@
 const ctx = document.getElementById('myChart').getContext('2d');
-const chartContainer = document.querySelector("chart-container");
+const chartContainer = document.querySelector(".chart-container");
+const countriesStatsContainer = document.querySelector(".countries-stats-container");
 const individualCountriesContainer = document.querySelector(".individual-countries-container");
 const asiaBtn = document.querySelector(".asia-btn");
 const europeBtn = document.querySelector(".europe-btn");
@@ -30,7 +31,6 @@ const allcountries = [];
 //first-fetching all countries by continents
 async function sendingAllContinentsToFetchInfo() {
     try {
-        // console.log("in 1");
         for(let i = 0; i <continentList.length; i++) {
             await fetchContinentInfo(continentList[i]);
         }
@@ -58,7 +58,7 @@ async function fetchCovidInfoByContinent(continent) {
     try {
         response = await fetch(`${covidByCountriesEndpoint}`);
         parsedData = await response.json(); //parsedData.data[x] to get a specific country
-        // console.log(parsedData);
+        console.log(parsedData);
         for(let i = 0; i < parsedData.data.length; i++) {
             if(allContinentsFetched[continentIndex].includes(parsedData.data[i].name)) {
                 const obj = {}; //inserting all relevant info on each country in the current continent
@@ -82,7 +82,6 @@ async function fetchCovidInfoByContinent(continent) {
 
 //fetching continent info and storing each continent in allContinentsFetached for access later
 async function fetchContinentInfo(continent) {
-    // console.log("in 2");
     let response;
     let data;
     try {
@@ -153,15 +152,18 @@ function getCriticalInfo() {
 function displayChart(dataTopresent,countriesToPresent)
 {
     if(currentContinentInfo.name) {  //if the currentContinet obj isn't empty 
+    countriesStatsContainer.innerHTML = "";
+    chartContainer.style.display = "block";
     const labels = ["confirmed", "deaths", "recovered", "critical"];
     let clickedLabel;
+    Chart.defaults.global.defaultFontColor = 'black';
     const chosenLabel = event.currentTarget.classList.contains("confirmed-btn")? clickedLabel = 0
                         : event.currentTarget.classList.contains("deaths-btn")? clickedLabel = 1
                         : event.currentTarget.classList.contains("recovered-btn")? clickedLabel = 2
                         : clickedLabel = 3;
-    const randomR = Math.floor(Math.random() * 256);  // returns a random integer from 0 to 100
-    const randomG = Math.floor(Math.random() * 256);  // returns a random integer from 0 to 100
-    const randomB = Math.floor(Math.random() * 256);  // returns a random integer from 0 to 100
+    const randomR = Math.floor(Math.random() * 256);  
+    const randomG = Math.floor(Math.random() * 256);  
+    const randomB = Math.floor(Math.random() * 256);  
     const myChart = new Chart(ctx, {
         type: 'line', //type of chart
         data: { //what we populate the chart with
@@ -169,11 +171,16 @@ function displayChart(dataTopresent,countriesToPresent)
           datasets: [{
             label: labels[clickedLabel],
             data: dataTopresent,
-            backgroundColor: `rgba(${randomR}, ${randomG}, ${randomB}, 0.4)`
+            backgroundColor: `rgba(${randomR}, ${randomG}, ${randomB}, 0.4)`,
           }]
         },
         options: {
             events: ['click'],
+            legend: {
+                labels: {
+                    fontColor: "black",
+                }
+            }
         }
       });
       displayCountriesBelowChart();
@@ -189,12 +196,74 @@ function displayCountriesBelowChart() {
         const countrySpan = document.createElement("span");
         countrySpan.classList.add("country-span");
         countrySpan.textContent = currentContinentInfo.countries[i].name;
-        countrySpan.addEventListener("click", presentSpecificCountryStats);
+        countrySpan.addEventListener("click", ()=>presentSpecificCountryStats(currentContinentInfo.countries[i]));
         individualCountriesContainer.appendChild(countrySpan);
     }
 }
 
-function presentSpecificCountryStats() {
+function presentSpecificCountryStats(countryobj) {
+    console.log(countryobj);
+    chartContainer.style.display = "none";
+    countriesStatsContainer.innerHTML = "";
+
+    const totalCases = document.createElement("div");
+    totalCases.classList.add("country-stats");
+    const totalCasesH2 = document.createElement("h2");
+    totalCasesH2.textContent = `${countryobj.name} total cases:`;
+    const totalCasesH3 = document.createElement("h3");
+    totalCasesH3.textContent = countryobj.confirmed;
+    totalCases.appendChild(totalCasesH2);
+    totalCases.appendChild(totalCasesH3);
+    countriesStatsContainer.appendChild(totalCases);
+
+    const deaths = document.createElement("div");
+    deaths.classList.add("country-stats");
+    const deathsH2 = document.createElement("h2");
+    deathsH2.textContent = `${countryobj.name} deaths:`;
+    const deathsH3 = document.createElement("h3");
+    deathsH3.textContent = countryobj.deaths;
+    deaths.appendChild(deathsH2);
+    deaths.appendChild(deathsH3);
+    countriesStatsContainer.appendChild(deaths);
+
+    const recovered = document.createElement("div");
+    recovered.classList.add("country-stats");
+    const recoveredH2 = document.createElement("h2");
+    recoveredH2.textContent = `${countryobj.name} recovered:`;
+    const recoveredH3 = document.createElement("h3");
+    recoveredH3.textContent = countryobj.recovered;
+    recovered.appendChild(recoveredH2);
+    recovered.appendChild(recoveredH3);
+    countriesStatsContainer.appendChild(recovered);
+
+    const newCases = document.createElement("div");
+    newCases.classList.add("country-stats");
+    const newCasesH2 = document.createElement("h2");
+    newCasesH2.textContent = `${countryobj.name} new cases:`;
+    const newCasesH3 = document.createElement("h3");
+    newCasesH3.textContent = countryobj.newCases;
+    newCases.appendChild(newCasesH2);
+    newCases.appendChild(newCasesH3);
+    countriesStatsContainer.appendChild(newCases);
+
+    const newDeaths = document.createElement("div");
+    newDeaths.classList.add("country-stats");
+    const newDeathsH2 = document.createElement("h2");
+    newDeathsH2.textContent = `${countryobj.name} new deaths:`;
+    const newDeathsH3 = document.createElement("h3");
+    newDeathsH3.textContent = countryobj.newDeaths;
+    newDeaths.appendChild(newDeathsH2);
+    newDeaths.appendChild(newDeathsH3);
+    countriesStatsContainer.appendChild(newDeaths);
+
+    const critical = document.createElement("div");
+    critical.classList.add("country-stats");
+    const criticalH2 = document.createElement("h2");
+    criticalH2.textContent = `${countryobj.name} critical:`;
+    const criticalH3 = document.createElement("h3");
+    criticalH3.textContent = countryobj.critical;
+    critical.appendChild(criticalH2);
+    critical.appendChild(criticalH3);
+    countriesStatsContainer.appendChild(critical);
 
 }
-
