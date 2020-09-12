@@ -41,6 +41,13 @@ button {
     border-radius: 25px;
 }
 
+button:hover {
+    cursor: pointer;
+    background: black;
+    color:white;
+    transition-duration: 0.4s;
+}
+
 
 .container {
     width: 80%;
